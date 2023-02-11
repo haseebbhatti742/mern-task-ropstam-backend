@@ -20,7 +20,7 @@ router
   );
 
 router
-  .route("/:categoryId")
+  .route("/:category")
   .get(
     auth(),
     validate(categoryValidation.getCategory),

@@ -5,8 +5,12 @@ const { carService } = require("../../services");
 let carController = {};
 
 carController.createCar = catchAsync(async (req, res) => {
-  const car = await carService.createCar(req.body);
-  res.status(httpStatus.CREATED).send(car);
+  const isCarAlreadyRegistered = await carService.getCarByRegistrationNumber(req.body.registrationNumber)
+  if(isCarAlreadyRegistered) throw new ApiError(httpStatus.NOT_FOUND, "Registration Number Taken")
+  else {
+    const car = await carService.createCar(req.body);
+    res.status(httpStatus.CREATED).send(car);
+  }
 });
 
 carController.getAllcars = catchAsync(async (req, res) => {
@@ -29,6 +33,8 @@ carController.updateCarById = catchAsync(async (req, res) => {
   const car = await carService.getCarById(req?.params?.carId);
   if (!car) throw new ApiError(httpStatus.NOT_FOUND, "Car Not Found");
   else {
+    const isCarAlreadyRegistered = await carService.getCarByRegistrationNumber(req.body.registrationNumber)
+    if(isCarAlreadyRegistered && car.id !== isCarAlreadyRegistered.id) throw new ApiError(httpStatus.NOT_FOUND, "Registration Number Taken")
     const cars = await carService.updateCarById(req?.params?.carId, req?.body);
     res.send(cars);
   }

@@ -19,7 +19,7 @@ authService.signup = async (name, email) => {
     throw new ApiError(httpStatus.BAD_REQUEST, "User already exists");
   const password = generatePassword();
   const user = await UserModel.create({ name, email, password });
-  sendNewPasswordEmail(email, password);
+  await sendNewPasswordEmail(email, password);
   return "User created successfully. Please check your email for password.";
 };
 

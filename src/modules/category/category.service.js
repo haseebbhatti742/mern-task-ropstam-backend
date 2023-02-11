@@ -17,7 +17,7 @@ categoryService.createCategory = async (CategoryBody) => {
  * @returns {Promise<CategoryModel>}
  */
 categoryService.getAllCategorys = async () => {
-  return CategoryModel.find({});
+  return CategoryModel.find({})
 };
 
 /**

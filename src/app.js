@@ -5,7 +5,6 @@ const mongoSanitize = require("express-mongo-sanitize");
 const cors = require("cors");
 const passport = require("passport");
 const httpStatus = require("http-status");
-const config = require("./config/config");
 const { jwtStrategy } = require("./config/passport");
 const routes = require("./routes/v1");
 const { errorConverter, errorHandler } = require("./middlewares/error");

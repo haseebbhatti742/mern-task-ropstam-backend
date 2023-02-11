@@ -19,7 +19,7 @@ categoryController.getAllCategories = catchAsync(async (req, res) => {
 
 categoryController.getCategoryById = catchAsync(async (req, res) => {
   const Category = await categoryService.getCategoryById(
-    req?.params?.categoryId
+    req?.params?.category
   );
   if (!Category) {
     throw new ApiError(httpStatus.NOT_FOUND, "Category Not Found");
@@ -29,12 +29,12 @@ categoryController.getCategoryById = catchAsync(async (req, res) => {
 
 categoryController.updateCategoryById = catchAsync(async (req, res) => {
   const category = await categoryService.getCategoryById(
-    req?.params?.categoryId
+    req?.params?.category
   );
   if (!category) throw new ApiError(httpStatus.NOT_FOUND, "Category Not Found");
   else {
     const Categories = await categoryService.updateCategoryById(
-      req?.params?.categoryId,
+      req?.params?.category,
       req?.body
     );
     res.send(Categories);
@@ -43,12 +43,12 @@ categoryController.updateCategoryById = catchAsync(async (req, res) => {
 
 categoryController.deleteCategoryById = catchAsync(async (req, res) => {
   const category = await categoryService.getCategoryById(
-    req?.params?.categoryId
+    req?.params?.category
   );
   if (!category) throw new ApiError(httpStatus.NOT_FOUND, "Category Not Found");
   else {
     const Categories = await categoryService.deleteCategoryById(
-      req?.params?.categoryId
+      req?.params?.category
     );
     res.send(Categories);
   }

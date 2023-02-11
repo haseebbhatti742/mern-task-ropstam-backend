@@ -15,7 +15,7 @@ carService.createCar = async (carBody) => {
  * @returns {Promise<CarModel>}
  */
 carService.getAllCars = async () => {
-  return CarModel.find({});
+  return await CarModel.find({}).populate('category');
 };
 
 /**
@@ -24,7 +24,16 @@ carService.getAllCars = async () => {
  * @returns {Promise<CarModel>}
  */
 carService.getCarById = async (id) => {
-  return CarModel.findById(id);
+  return await CarModel.findById(id).populate("category");
+};
+
+/**
+ * Get car By Id
+ * @param {string} registrationNumber
+ * @returns {Promise<CarModel>}
+ */
+carService.getCarByRegistrationNumber = async (registrationNumber) => {
+  return await CarModel.findOne({registrationNumber})
 };
 
 /**

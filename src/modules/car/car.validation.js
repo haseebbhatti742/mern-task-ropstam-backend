@@ -4,7 +4,7 @@ let carValidation = {};
 
 carValidation.createCar = {
   body: Joi.object().keys({
-    categoryId: Joi.string().required().custom(objectId),
+    category: Joi.string().required().custom(objectId),
     registrationNumber: Joi.string().required(),
     make: Joi.string().required(),
     model: Joi.number().min(1998).required(),
@@ -27,7 +27,8 @@ carValidation.updateCar = {
     carId: Joi.string().custom(objectId),
   }),
   body: Joi.object().keys({
-    categoryId: Joi.string().required().custom(objectId),
+    id: Joi.string().required().custom(objectId),
+    category: Joi.string().required().custom(objectId),
     registrationNumber: Joi.string().required(),
     make: Joi.string().required(),
     model: Joi.number().min(1998).required(),

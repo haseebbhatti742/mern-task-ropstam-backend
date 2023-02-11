@@ -4,9 +4,10 @@ const { toJSON, paginate } = require("../../models/plugins");
 const CarSchema = mongoose.Schema(
   {
     //common fields
-    categoryId: {
+    category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
+      cascade: true
     },
     registrationNumber: {
       type: String,
@@ -36,6 +37,7 @@ const CarSchema = mongoose.Schema(
   },
   {
     timestamps: true,
+    strictPopulate: false
   }
 );
 

@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const CarModel = require("../car/car.model");
 const { toJSON, paginate } = require("../../models/plugins");
 
 const CategorySchema = mongoose.Schema(
@@ -18,13 +19,27 @@ const CategorySchema = mongoose.Schema(
     },
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 
 // add plugin that converts mongoose to json
 CategorySchema.plugin(toJSON);
 CategorySchema.plugin(paginate);
+
+CategorySchema.pre('deleteOne', async function(next) {
+  const category = this;
+
+  // Find all the cars associated with the category
+  const cars = await CarModel.find(category._id);
+  if(cars.length > 0) {
+    for(const car of cars) {
+      await CarModel.deleteOne({_id:car.id})
+    }
+  }
+
+  next();
+});
 
 /**
  * @typedef Category

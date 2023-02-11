@@ -14,13 +14,13 @@ categoryValidation.getAllCategories = {
 
 categoryValidation.getCategory = {
   params: Joi.object().keys({
-    categoryId: Joi.string().custom(objectId),
+    category: Joi.string().custom(objectId),
   }),
 };
 
 categoryValidation.updateCategory = {
   params: Joi.object().keys({
-    categoryId: Joi.string().custom(objectId),
+    category: Joi.string().custom(objectId),
   }),
   body: Joi.object().keys({
     name: Joi.string().required(),
