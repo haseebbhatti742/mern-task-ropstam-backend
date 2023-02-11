@@ -30,11 +30,16 @@ authService.signup = async (name, email) => {
  */
 authService.loginUserWithEmailAndPassword = async (email, password) => {
   const user = await userService.getUserByEmail(email);
-  const isPasswordMatch = await bcrypt.compare(password, user.password);
-  if (!user || !isPasswordMatch) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, "Incorrect email or password");
+  if (!user) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, "User not registered");
+  } else {
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    if(!isPasswordMatch) {
+      throw new ApiError(httpStatus.UNAUTHORIZED, "Incorrect password");
+    } else {
+      return user;
+    }
   }
-  return user;
 };
 
 module.exports = authService;
